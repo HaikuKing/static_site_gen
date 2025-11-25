@@ -127,9 +127,20 @@ class TestInlineMarkdown(unittest.TestCase):
             new_nodes,
         )
 
+    def test_split_no_images(self):
+        node = TextNode("This is text with no image", TextType.TEXT)
+
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with no image", TextType.TEXT),
+            ],
+            new_nodes,
+        )
+
     def test_split_links(self):
         node = TextNode(
-            "This is text with a [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+            "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
             TextType.TEXT,
         )
         new_nodes = split_nodes_link([node])
@@ -141,6 +152,17 @@ class TestInlineMarkdown(unittest.TestCase):
                 TextNode(
                 "to youtube", TextType.LINK, "https://www.youtube.com/@bootdotdev"
                 ),
+            ],
+            new_nodes,
+        )
+    
+    def test_split_no_links(self):
+        node = TextNode("This is text with no link", TextType.TEXT)
+
+        new_nodes = split_nodes_link([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with no link", TextType.TEXT),
             ],
             new_nodes,
         )

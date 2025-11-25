@@ -41,14 +41,26 @@ def split_nodes_image(old_nodes):
             new_nodes.append(old_node)
             continue
         split_nodes = []
-        sections = extract_markdown_images(old_node.text)
-        for i in range(len(sections)):
-            if sections[i] == "":
-                continue
-            if i % 2 == 0:
-                split_nodes.append(TextNode(sections[i], TextType.TEXT))
-            else:
-                split_nodes.append(TextNode(sections[i][0], TextType.IMAGE, sections[i][1]))
+
+        text = old_node.text
+        images = extract_markdown_images(text)
+        if not images:
+            split_nodes.append(old_node)
+
+        else:
+            for alt, url in images:
+                full_markdown = f"![{alt}]({url})"
+                before, after = text.split(full_markdown, 1)
+
+                if before:
+                    split_nodes.append(TextNode(before, TextType.TEXT))
+
+                split_nodes.append(TextNode(alt, TextType.IMAGE, url))
+
+                text = after
+            if text:
+                split_nodes.append(TextNode(text, TextType.TEXT))
+                
         new_nodes.extend(split_nodes)
     return new_nodes
 
@@ -59,13 +71,25 @@ def split_nodes_link(old_nodes):
             new_nodes.append(old_node)
             continue
         split_nodes = []
-        sections = extract_markdown_links(old_node.text)
-        for i in range(len(sections)):
-            if sections[i] == "":
-                continue
-            if i % 2 == 0:
-                split_nodes.append(TextNode(sections[i], TextType.TEXT))
-            else:
-                split_nodes.append(TextNode(sections[i][0], TextType.LINK, sections[i][1]))
+
+        text = old_node.text
+        links = extract_markdown_links(text)
+        if not links:
+            split_nodes.append(old_node)
+
+        else:
+            for alt, url in links:
+                full_markdown = f"[{alt}]({url})"
+                before, after = text.split(full_markdown, 1)
+
+                if before:
+                    split_nodes.append(TextNode(before, TextType.TEXT))
+
+                split_nodes.append(TextNode(alt, TextType.LINK, url))
+
+                text = after
+            if text:
+                split_nodes.append(TextNode(text, TextType.TEXT))
+                
         new_nodes.extend(split_nodes)
     return new_nodes
