@@ -6,7 +6,26 @@ class HTMLNode:
         self.props = props
 
     def to_html(self):
-        raise NotImplementedError("to_html method not implemented")
+        if self.tag is None:
+        # plain text node
+            if self.value is None:
+                return ""
+            else:
+                return self.value
+
+        # build opening tag (with optional props)
+        if self.props:
+            props = self.props_to_html()
+        else:
+            props = ""
+        
+        # if we have children, render them and ignore self.value
+        if self.children is not None:
+            inner_html = "".join(child.to_html() for child in self.children)
+            return f"<{self.tag}{props}>{inner_html}</{self.tag}>"
+
+        # leaf node: just value
+        return f"<{self.tag}{props}>{self.value}</{self.tag}>"
     
     def props_to_html(self):
         if self.props is None:
@@ -15,6 +34,14 @@ class HTMLNode:
         for prop in self.props:
             result += f' {prop}="{self.props[prop]}"'
         return result
+
+    def __eq__(self, other):
+        return (
+            self.tag == other.tag
+            and self.value == other.value
+            and self.children == other.children
+            and self.props == other.props
+        )
 
     def __repr__(self):
         return f"HTMLNode({self.tag}, {self.value}, children: {self.children}, {self.props})"
@@ -52,5 +79,4 @@ class ParentNode(HTMLNode):
             for child in self.children:
                 result += f'{child.to_html()}'
             result += f'</{self.tag}>'
-            # print(result)
             return result
