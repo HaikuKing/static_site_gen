@@ -58,24 +58,15 @@ def remove_code(abs_public):
         os.mkdir(abs_public)
         print(f"Removed things from {abs_public}")
 
-def copy_code(working_directory, abs_public):
-    abs_working = os.path.abspath(working_directory)
-    
-    try:
-        files = get_files_info(abs_working)
-    except Exception as e:
-        print(e)
-        return
-    
-    new_files = files.split("\n")
-    
-    for file in new_files:
-        abs_path = os.path.abspath(file)
-        rel_path = os.path.relpath(abs_path, abs_working)
-        if os.path.isfile(abs_path):
-            shutil.copy(abs_path, abs_public)
-            print(f"{rel_path} copied to {abs_public}")
-        elif os.path.isdir(abs_path):
-            new_dest = os.path.abspath(os.path.join(abs_public, rel_path))
-            os.mkdir(new_dest)
-            copy_code(abs_path, new_dest)
+def copy_code(source_dir_path, dest_dir_path):
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
+
+    for filename in os.listdir(source_dir_path):
+        from_path = os.path.join(source_dir_path, filename)
+        dest_path = os.path.join(dest_dir_path, filename)
+        print(f" * {from_path} -> {dest_path}")
+        if os.path.isfile(from_path):
+            shutil.copy(from_path, dest_path)
+        else:
+            copy_code(from_path, dest_path)

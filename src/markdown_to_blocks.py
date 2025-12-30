@@ -112,7 +112,7 @@ def block_to_html_node(block):
         lines = block.split("\n")
         new_lines = []
         for line in lines:
-            new_lines.append(line.strip(">"))
+            new_lines.append(line.lstrip(">").strip())
         new_block = "\n".join(new_lines)
         children = text_to_children(new_block)
         return HTMLNode("blockquote", None, children)
@@ -138,14 +138,16 @@ def block_to_html_node(block):
         lines = block.split("\n")
         items = []
         for line in lines:
-            items.append(HTMLNode("li", line))
+            stripped_line = line.lstrip("-").strip()
+            items.append(HTMLNode("li", None, text_to_children(stripped_line)))
         return HTMLNode("ul", None, items)
     
     elif block_type == BlockType.ORDERED_LIST:
         lines = block.split("\n")
         items = []
         for line in lines:
-            items.append(HTMLNode("li", line))
+            stripped_line = line.lstrip("1234567890.").strip()
+            items.append(HTMLNode("li", None, text_to_children(stripped_line)))
         return HTMLNode("ol", None, items)
 
 def markdown_to_html_node(md):
@@ -154,4 +156,3 @@ def markdown_to_html_node(md):
     for block in blocks:
         children.append(block_to_html_node(block))
     return HTMLNode("div", None, children)
-
