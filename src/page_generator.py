@@ -1,6 +1,7 @@
 import re
 import os
 from markdown_to_blocks import markdown_to_html_node
+from constants import basepath
 
 def extract_title(markdown):
     pattern = r'^(#{1})\s+(.*)$'
@@ -17,7 +18,7 @@ def write_file(working_directory, file_path, content):
     # Error Handling
     
     if not (abs_file_path.startswith(os.path.abspath(working_directory) + os.sep) or abs_file_path == os.path.abspath(working_directory)):
-        return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
+        return f'WriteError: Cannot write to "{file_path}" as it is outside the permitted working directory'
     
     try:
         os.makedirs(os.path.dirname(abs_file_path), exist_ok=True)
@@ -26,7 +27,7 @@ def write_file(working_directory, file_path, content):
             file.write(content)
             return f'Successfully wrote to "{file_path}" ({len(content)} characters written)'
     except Exception as e:
-        return f'Error: {e}'
+        return f'WriteError: {e}'
 
 def generate_page(from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
@@ -45,7 +46,9 @@ def generate_page(from_path, template_path, dest_path):
     html_string = html_node.to_html()
     between_temp = template.replace("{{ Title }}", f"{title}")
     new_template = between_temp.replace("{{ Content }}", f"{html_string}")
-    write_file("./", dest_path, new_template)
+    new_href = new_template.replace('href="/', f'href="{basepath}')
+    new_src = new_href.replace('src="/', f'src="{basepath}')
+    write_file("./", dest_path, new_src)
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
     abs_cont = os.path.abspath(dir_path_content)
@@ -67,4 +70,4 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             generate_pages_recursive(abs_path, abs_temp, abs_dest)
 
         else:
-            print(f"Error: {abs_path} is not a file or a directory")
+            print(f"GenError: {abs_path} is not a file or a directory")
