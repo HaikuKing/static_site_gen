@@ -1,7 +1,6 @@
 import re
 import os
 from markdown_to_blocks import markdown_to_html_node
-from constants import basepath
 
 def extract_title(markdown):
     pattern = r'^(#{1})\s+(.*)$'
@@ -29,7 +28,7 @@ def write_file(working_directory, file_path, content):
     except Exception as e:
         return f'WriteError: {e}'
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     abs_from = os.path.abspath(os.path.join("./", from_path))
@@ -46,11 +45,11 @@ def generate_page(from_path, template_path, dest_path):
     html_string = html_node.to_html()
     between_temp = template.replace("{{ Title }}", f"{title}")
     new_template = between_temp.replace("{{ Content }}", f"{html_string}")
-    new_href = new_template.replace('href="/', f'href="{basepath}')
-    new_src = new_href.replace('src="/', f'src="{basepath}')
+    new_href = new_template.replace('href="/', f'href="{base_path}')
+    new_src = new_href.replace('src="/', f'src="{base_path}')
     write_file("./", dest_path, new_src)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, base_path):
     abs_cont = os.path.abspath(dir_path_content)
     abs_temp = os.path.abspath(template_path)
     abs_dest_dir = os.path.abspath(dest_dir_path)
@@ -63,11 +62,11 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         abs_new_dest = os.path.abspath(os.path.join(abs_dest_dir, new_path))
 
         if os.path.isfile(abs_path):
-            generate_page(abs_path, abs_temp, abs_new_dest)
+            generate_page(abs_path, abs_temp, abs_new_dest, base_path)
 
         elif os.path.isdir(abs_path):
             os.mkdir(abs_dest)
-            generate_pages_recursive(abs_path, abs_temp, abs_dest)
+            generate_pages_recursive(abs_path, abs_temp, abs_dest, base_path)
 
         else:
             print(f"GenError: {abs_path} is not a file or a directory")
