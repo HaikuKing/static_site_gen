@@ -7,7 +7,7 @@ CONTENT = "content"
 TEMPLATE = "template.html"
 
 
-if len(sys.argv) == 2:
+if len(sys.argv) > 1:
     basepath = sys.argv[1]
 else:
     basepath = "/"
