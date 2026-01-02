@@ -13,7 +13,7 @@ def main():
 
     remove_code(abs_docs)
     copy_code(abs_static, base_docs)
-    generate_pages_recursive(abs_content, abs_template, base_docs, basepath)
+    generate_pages_recursive(abs_content, abs_template, abs_docs, basepath)
     
 
 main()
