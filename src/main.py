@@ -5,7 +5,6 @@ from constants import basepath, DOCS, STATIC, CONTENT, TEMPLATE
 
 abs_static = os.path.abspath(os.path.join("./", STATIC))
 abs_docs = os.path.abspath(os.path.join("./", DOCS))
-base_docs = os.path.abspath(os.path.join(abs_docs, basepath.strip('/')))
 abs_content = os.path.abspath(os.path.join("./", CONTENT))
 abs_template = os.path.abspath(os.path.join("./", TEMPLATE))
 
