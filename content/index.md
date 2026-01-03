@@ -1,46 +1,25 @@
-# Tolkien Fan Club
+# HaikuKing
 
-![JRR Tolkien sitting](/images/tolkien.png)
+Hello! I am going to be using this site as a place to link to all of my past, present, and future projects for easy access.
 
-Here's the deal, **I like Tolkien**.
-
-> "I am in fact a Hobbit in all but size."
+> "Success is not final, failure is not fatal: It is the courage to continue that counts."
 >
-> -- J.R.R. Tolkien
+> -- Winston S. Churchill
 
-## Blog posts
 
-- [Why Glorfindel is More Impressive than Legolas](/blog/glorfindel)
-- [Why Tom Bombadil Was a Mistake](/blog/tom)
-- [The Unparalleled Majesty of "The Lord of the Rings"](/blog/majesty)
+## My Projects I've Finished
 
-## Reasons I like Tolkien
+- I made a [Bookbot](https://github.com/HaikuKing/Python_Bookbot) in Python
+- Here lies my [asteroids project](https://github.com/HaikuKing/asteroids), rest its soul
+- Then, I used gemini-2.5-flash to make an [ai agent](https://github.com/HaikuKing/ai_agent)
+- [This site](https://github.com/HaikuKing/static_site_gen) was also a project!
 
-- You can spend years studying the legendarium and still not understand its depths
-- It can be enjoyed by children and adults alike
-- Disney _didn't ruin it_ (okay, but Amazon might have)
-- It created an entirely new genre of fantasy
 
-## My favorite characters (in order)
-
-1. Gandalf
-2. Bilbo
-3. Sam
-4. Glorfindel
-5. Galadriel
-6. Elrond
-7. Thorin
-8. Sauron
-9. Aragorn
-
-Here's what `elflang` looks like (the perfect coding language):
-
-```
-func main(){
-    fmt.Println("Aiya, Ambar!")
-}
-```
+### Contact Information
 
 Want to get in touch? [Contact me here](/contact).
 
-This site was generated with a custom-built [static site generator](https://www.boot.dev/courses/build-static-site-generator-python) from the course on [Boot.dev](https://www.boot.dev).
+
+#### The Making Of This Site
+
+This site was generated with a custom-built [static site generator](https://www.boot.dev/courses/build-static-site-generator-python) from the course on [Boot.dev](https://www.boot.dev) using carefully crafted custom markdown text.

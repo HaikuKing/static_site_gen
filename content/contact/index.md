@@ -1,9 +1,9 @@
-# Contact the Author
+# Contact Information
 
 [< Back Home](/)
 
-Give me a call anytime to chat about Tolkien!
+You can contact me via email at:
 
-`555-555-5555`
+`haiku.king6301@gmail.com`
 
-**"Váya márië."**
+Please feel free to give feedback.
